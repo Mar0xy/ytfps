@@ -52,7 +52,10 @@ async function fetchFromPlaylist(url: string) : Promise<YTPlaylist> {
     try {
         let mf = d.microformat.microformatDataRenderer;
         let si0 = d.sidebar.playlistSidebarRenderer.items[0].playlistSidebarPrimaryInfoRenderer;
-        let si1 = d.sidebar.playlistSidebarRenderer.items[1].playlistSidebarSecondaryInfoRenderer.videoOwner.videoOwnerRenderer;
+        let si1 = NULL;
+        if (d.sidebar.playlistSidebarRenderer.items[1].playlistSidebarSecondaryInfoRenderer.videoOwner) {
+            si1 = d.sidebar.playlistSidebarRenderer.items[1].playlistSidebarSecondaryInfoRenderer.videoOwner.videoOwnerRenderer;
+        }
         return {
             title: mf.title,
             url: baseURL + '/playlist?list=' + listData.playlistId,
@@ -63,9 +66,9 @@ async function fetchFromPlaylist(url: string) : Promise<YTPlaylist> {
             isUnlisted: mf.unlisted,
             thumbnail_url: mf.thumbnail.thumbnails.pop().url.replace(/\?.*/, ''),
             author: {
-                name: si1.title.runs[0].text,
-                url: baseURL + si1.title.runs[0].navigationEndpoint.commandMetadata.webCommandMetadata.url,
-                avatar_url: si1.thumbnail.thumbnails.pop().url
+                name: si1 ? si1.title.runs[0].text : 'undefined',
+                url: si1 ? baseURL + si1.title.runs[0].navigationEndpoint.commandMetadata.webCommandMetadata.url : 'undefined',
+                avatar_url: si1 ? si1.thumbnail.thumbnails.pop().url : 'undefined'
             },
             videos: videos
         }
