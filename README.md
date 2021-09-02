@@ -5,7 +5,7 @@ Tiny module to scrap youtube playlist metadata and its videos (not limited to 10
 
 # Install
 
-    npm install ytfps
+    npm install @maroxy/ytfps
 
 # Usage
 
