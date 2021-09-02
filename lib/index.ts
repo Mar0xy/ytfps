@@ -64,8 +64,11 @@ async function fetchFromPlaylist(url: string) : Promise<YTPlaylist> {
             isUnlisted: mf.unlisted,
             thumbnail_url: mf.thumbnail.thumbnails.pop().url.replace(/\?.*/, ''),
             author: {
+                //@ts-ignore
                 name: si1 ? si1.title.runs[0].text : 'undefined',
+                //@ts-ignore
                 url: si1 ? baseURL + si1.title.runs[0].navigationEndpoint.commandMetadata.webCommandMetadata.url : 'undefined',
+                //@ts-ignore
                 avatar_url: si1 ? si1.thumbnail.thumbnails.pop().url : 'undefined'
             },
             videos: videos
